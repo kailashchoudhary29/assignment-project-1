@@ -1,0 +1,28 @@
+{
+  "name": "webdriver_project_001",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "wdio": "wdio run ./wdio.conf.js",
+    "test": "ENV=dev wdio run ./wdio.conf.js",
+    "test:qa": "ENV=qa wdio run ./wdio.conf.js",
+    "test:prod": "ENV=prod wdio run ./wdio.conf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@wdio/cli": "^9.17.1",
+    "@wdio/cucumber-framework": "^9.17.0",
+    "@wdio/local-runner": "^9.17.0",
+    "@wdio/spec-reporter": "^9.17.0"
+  },
+  "dependencies": {
+    "allure": "^3.0.0-beta.16",
+    "axios": "^1.10.0",
+    "dotenv": "^17.2.0",
+    "eslint-plugin-wdio": "^9.16.2"
+  }
+}
