@@ -32,5 +32,13 @@ BASE_URL=https://app.rudderstack.com
 QA_USER=your-temp-business-testemail@example.com
 QA_PASSWORD=yourSecurePassword123
 
-//run cmd
-npx wdio
+Machine Setup
+After cloning the project, first execute the following command:
+
+npm install
+
+Run the tests
+Currently there is only one test related to assigment.
+
+npm run wdio
+
