@@ -1,4 +1,4 @@
-# 🧪 RudderStack SDET Automation Framework
+# 🧪 SDET Automation Framework
 
 This repository contains a basic test automation framework for validating essential RudderStack flows using **WebdriverIO**, **CucumberJS**, and **JavaScript**. The framework is environment-configurable and integrates with GitHub Actions to run scheduled test executions.
 
