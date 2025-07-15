@@ -6,9 +6,9 @@
 // require('dotenv').config({ path: `.env.${process.env.QA_ENV || 'qa'}` });
 
 // Determine single environment:
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env' });
-import VideoReporter from 'wdio-video-reporter';
+require('dotenv').config({ path: '.env' })
+const VideoReporter = require('wdio-video-reporter');
+
 
 
 exports.config = {

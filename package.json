@@ -12,7 +12,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
     "@wdio/cli": "^9.17.1",
     "@wdio/cucumber-framework": "^9.17.0",
