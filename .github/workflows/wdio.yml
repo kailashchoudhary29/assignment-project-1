@@ -1,28 +1,31 @@
-name : Test CI pipeline
+name: Test CI pipeline
 
-on: 
+on:
   push:
-    branches :
-     - main
-     
+    branches:
+      - main
 
-job:
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name : Checkout code
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name : Set up Node.js
+
+      - name: Set up Node.js
         uses: actions/setup-node@v2
-        with :
-          node-version : '24'
-      - name : Install dependencies
-        run : npm install
-      - name : Run test
-        run : npx wdio
-      - name : Upload test results 
-        uses: actions/upload-artifact@v2
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npx wdio
+
+      - name: Upload test results
         if: failure()
+        uses: actions/upload-artifact@v2
         with:
           name: wdio-test-results
           path: ./test-results/
