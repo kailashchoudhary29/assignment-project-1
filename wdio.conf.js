@@ -7,7 +7,7 @@ require('dotenv').config({ path: `.env.${process.env.QA_ENV || 'qa'}` });
 
 
 exports.config = {
-     baseUrl: process.env.BASE_URL,
+    baseUrl: process.env.BASE_URL,
     //
     // ====================
     // Runner Configuration
@@ -58,9 +58,17 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-        browserName: 'chrome'
-    }],
+    capabilities: [
+        {
+            maxInstances: 5,
+            browserName: 'chrome',
+            acceptInsecureCerts: true,
+            //Chrome flags in order to tell Chrome to run headless
+            'goog:chromeOptions': {
+                args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage'],
+            },
+        },
+    ],
 
     //
     // ===================
@@ -118,7 +126,7 @@ exports.config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'cucumber',
-    
+
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -162,18 +170,18 @@ exports.config = {
         ignoreUndefinedDefinitions: false
     },
 
-     onPrepare: function () {
-    console.log(`Running QA tests in ENV: ${process.env.QA_ENV}`);
-    console.log(`Base URL: ${process.env.BASE_URL}`);
-  },
+    onPrepare: function () {
+        console.log(`Running QA tests in ENV: ${process.env.QA_ENV}`);
+        console.log(`Base URL: ${process.env.BASE_URL}`);
+    },
 
-  before: function () {
-    // If you want, you can globally expose env vars
-    global.USER_EMAIL = process.env.USER_EMAIL;
-    global.USER_PASSWORD = process.env.USER_PASSWORD;
-    global.WEBHOOK_URL = process.env.WEBHOOK_URL;
-    global.HTTP_SOURCE_NAME = process.env.HTTP_SOURCE_NAME;
-  }
+    before: function () {
+        // If you want, you can globally expose env vars
+        global.USER_EMAIL = process.env.USER_EMAIL;
+        global.USER_PASSWORD = process.env.USER_PASSWORD;
+        global.WEBHOOK_URL = process.env.WEBHOOK_URL;
+        global.HTTP_SOURCE_NAME = process.env.HTTP_SOURCE_NAME;
+    }
 
     //
     // =====
@@ -295,7 +303,7 @@ exports.config = {
      */
     // afterFeature: function (uri, feature) {
     // },
-    
+
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name

@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,6 +17,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '24'
+
+      - name: Verify Chrome installation
+        run: google-chrome --version
 
       - name: Install dependencies
         run: npm install
