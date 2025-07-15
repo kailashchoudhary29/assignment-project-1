@@ -1,10 +1,12 @@
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
 
-// Determine environment: default to 'dev' if not set
-const targetEnv = process.env.ENV || 'dev';
-dotenv.config({ path: `.env.${targetEnv}` });
-require('dotenv').config({ path: `.env.${process.env.QA_ENV || 'qa'}` });
+// // Determine  multi environment: default to 'dev' if not set
+// const targetEnv = process.env.ENV || 'dev';
+// dotenv.config({ path: `.env.${targetEnv}` });
+// require('dotenv').config({ path: `.env.${process.env.QA_ENV || 'qa'}` });
 
+// Determine single environment:
+require('dotenv').config({ path: '.env' })
 
 exports.config = {
     baseUrl: process.env.BASE_URL,

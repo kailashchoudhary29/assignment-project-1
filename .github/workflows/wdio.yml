@@ -24,6 +24,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create .env file from GitHub secrets
+        run: |
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "LOGIN_USER=${{ secrets.LOGIN_USER }}" >> .env
+          echo "LOGIN_PASS=${{ secrets.LOGIN_PASS }}" >> .env
+        shell: bash
+
+      - name: Verify .env file contents (optional)
+        run: cat .env
+
       - name: Run tests
         run: npx wdio
 
