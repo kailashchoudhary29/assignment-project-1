@@ -23,9 +23,4 @@ jobs:
       - name: Run tests
         run: npx wdio
 
-      - name: Upload test results
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: wdio-test-results
-          path: ./test-results/
+     
