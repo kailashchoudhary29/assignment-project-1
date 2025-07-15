@@ -148,7 +148,7 @@ exports.config = {
     reporters: ['spec',
         [
             VideoReporter, {
-                saveallVideos: false, // If true, also saves videos of successful test cases
+                saveAllVideos: false, // If true, also saves videos of successful test cases
                 videoSlowdownMultiplier: 3, // optional slow motion
                 outputDir: './videos',
                 videoRenderTimeout: 60 * 1000, // 1 minute
