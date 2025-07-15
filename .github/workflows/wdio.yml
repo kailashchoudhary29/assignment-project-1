@@ -38,4 +38,18 @@ jobs:
       - name: Run tests
         run: npx wdio
 
+      - name: Upload error screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: error-screenshots
+          path: ./errorShots/**/*.png
+
+      - name: Upload videos
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-videos
+          path: ./videos/**/*.mp4
+
      

@@ -7,6 +7,8 @@
 
 // Determine single environment:
 require('dotenv').config({ path: '.env' })
+import VideoReporter from 'wdio-video-reporter';
+
 
 exports.config = {
     baseUrl: process.env.BASE_URL,
@@ -142,7 +144,20 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec',
+        [
+            VideoReporter, {
+                saveallVideos: false, // If true, also saves videos of successful test cases
+                videoSlowdownMultiplier: 3, // optional slow motion
+                outputDir: './videos',
+                videoRenderTimeout: 60 * 1000, // 1 minute
+                videoEncoding: 'h264',
+                videoFrameRate: 30,
+            }
+        ]
+
+
+    ],
 
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
@@ -173,7 +188,7 @@ exports.config = {
     },
 
     onPrepare: function () {
-        console.log(`Running QA tests in ENV: ${process.env.QA_ENV}`);
+        // console.log(`Running QA tests in ENV: ${process.env.QA_ENV}`);
         console.log(`Base URL: ${process.env.BASE_URL}`);
     },
 
@@ -183,7 +198,7 @@ exports.config = {
         global.USER_PASSWORD = process.env.USER_PASSWORD;
         global.WEBHOOK_URL = process.env.WEBHOOK_URL;
         global.HTTP_SOURCE_NAME = process.env.HTTP_SOURCE_NAME;
-    }
+    },
 
     //
     // =====
@@ -322,8 +337,20 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that ran
      */
-    // after: function (result, capabilities, specs) {
-    // },
+    after: async function (result, capabilities, specs) {
+        // 1 = failure, 0 = success
+        if (result === 1) {
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const filename = `suite-failed-${timestamp}.png`;
+            const filePath = path.join('errorShots', filename);
+
+            // Ensure the folder exists
+            fs.mkdirSync('errorShots', { recursive: true });
+
+            await browser.saveScreenshot(filePath);
+            console.log(`Screenshot of failed suite saved: ${filePath}`);
+        }
+    }
     /**
      * Gets executed right after terminating the webdriver session.
      * @param {object} config wdio configuration object
@@ -361,4 +388,6 @@ exports.config = {
     */
     // afterAssertion: function(params) {
     // }
+
+
 }
