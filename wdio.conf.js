@@ -70,10 +70,10 @@ exports.config = {
             maxInstances: 5,
             browserName: 'chrome',
             acceptInsecureCerts: true,
-            //Chrome flags in order to tell Chrome to run headless
-            // 'goog:chromeOptions': {
-            //     args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage'],
-            // },
+            // Chrome flags in order to tell Chrome to run headless
+            'goog:chromeOptions': {
+                args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage'],
+            },
         },
     ],
 
