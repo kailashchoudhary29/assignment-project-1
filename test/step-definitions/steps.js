@@ -39,8 +39,9 @@ Then(/^I should ignore multi authentication login$/, async () => {
         await expect(dashboardTextElement).toBeDisplayed();
         await dashboardTextElement.click();
         await pages.dashboard.goToDashboardBtn.click();
-        await pages.dashboard.closePopupButton.waitForDisplayed({ timeout: 3000 });
+        await pages.dashboard.closePopupButton.waitForDisplayed({ timeout: 2000 });
         await pages.dashboard.closePopupButton.click();
+
     } else {
         throw new Error("Dashboard text element is not displayed or does not contain expected text");
     }
@@ -75,7 +76,7 @@ When(/^I copied the Data Plane URL and Write Key$/, async () => {
 Given(/^I trigger the API to get the count of Delivered and Failed events$/, async () => {
     const rudder = new RudderstackAPI();
     await rudder.sendIdentifyEvent();
-    await pages.dashboard.triggerAPIForEventCount();
+
 });
 
 

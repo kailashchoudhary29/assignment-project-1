@@ -42,3 +42,8 @@ Currently there is only one test related to assigment.
 
 npm run wdio
 
+If user want to run based on Tag
+
+npx wdio run wdio.conf.js --cucumberOpts.tagExpression="@smoke"
+
+

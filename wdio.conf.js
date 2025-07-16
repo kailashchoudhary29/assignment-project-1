@@ -8,6 +8,8 @@
 // Determine single environment:
 require('dotenv').config({ path: '.env' })
 const video = require('wdio-video-reporter');
+const path = require('path');
+const fs = require('fs');
 
 
 
@@ -69,9 +71,9 @@ exports.config = {
             browserName: 'chrome',
             acceptInsecureCerts: true,
             //Chrome flags in order to tell Chrome to run headless
-            'goog:chromeOptions': {
-                args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage'],
-            },
+            // 'goog:chromeOptions': {
+            //     args: ['--headless', '--disable-gpu', '--disable-dev-shm-usage'],
+            // },
         },
     ],
 
@@ -145,10 +147,10 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-   
+
     reporters: ['spec',
         ['video', {
-            saveAllVideos: false,  
+            saveAllVideos: false,
             outputDir: './_results_/videos',     // If true, also saves videos for successful test cases
             videoSlowdownMultiplier: 3, // Higher to get slower videos, lower for faster videos [Value 1-100]
         }],
@@ -339,16 +341,19 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {Array.<String>} specs List of spec file paths that ran
      */
+
     after: async function (result, capabilities, specs) {
         // 1 = failure, 0 = success
         if (result === 1) {
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const folderPath = path.join('_results_', 'errorShots');
             const filename = `suite-failed-${timestamp}.png`;
-            const filePath = path.join('errorShots', filename);
+            const filePath = path.join(folderPath, filename);
 
-            // Ensure the folder exists
-            fs.mkdirSync('errorShots', { recursive: true });
+            // Ensure the directory exists
+            fs.mkdirSync(folderPath, { recursive: true });
 
+            // Save the screenshot
             await browser.saveScreenshot(filePath);
             console.log(`Screenshot of failed suite saved: ${filePath}`);
         }
