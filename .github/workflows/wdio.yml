@@ -45,11 +45,11 @@ jobs:
           name: error-screenshots
           path: ./_results_/errorShots/**/*.png
 
-      - name: Upload videos
-        if: failure()
+      - name: Upload video artifacts
         uses: actions/upload-artifact@v4
         with:
           name: test-videos
-          path: ./_results_/videos/**/*.mp4
+          path: ./_results_/videos/**/*.*
+          if-no-files-found: warn
 
      
