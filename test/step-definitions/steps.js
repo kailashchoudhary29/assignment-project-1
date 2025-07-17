@@ -33,36 +33,12 @@ When(/^I enter valid usermail and password credentials$/, async () => {
 });
 
 Then(/^I should ignore multi authentication login$/, async () => {
-    const dashboardTextElement = await pages.login.laterText;
-    const isVisible = await dashboardTextElement.isDisplayed();
-
-    if (isVisible) {
-        await expect(dashboardTextElement).toBeDisplayed();
-        await dashboardTextElement.click();
-        await pages.dashboard.goToDashboardBtn.click();
-        await pages.dashboard.closePopupButton.waitForDisplayed({ timeout: 2000 });
-        await pages.dashboard.closePopupButton.click();
-
-    } else {
-        throw new Error("Dashboard text element is not displayed or does not contain expected text");
-    }
+    await pages.dashboard.dismissDashboardIntroIfPresent()
 });
 
 
 Given(/^I am on the Connections page$/, async () => {
-    const connectionsHeading = await $("//h3[text()='Connections']");
-    const isDisplayed = await connectionsHeading.isDisplayed().catch(() => false);
-
-    if (!isDisplayed) {
-        console.log('Navigating to Connections page');
-        const subMenuConnection = await pages.dashboard.subMenuConnectionTab;
-        await subMenuConnection.click();
-
-        // Wait for the Connections heading to appear
-        await $('//h3[text()="Connections"]').waitForDisplayed({ timeout: 2000 });
-    } else {
-        console.log('Already on Connections page');
-    }
+    await pages.dashboard.navigateToConnectionsSection()
 });
 
 When(/^I copied the Data Plane URL and Write Key$/, async () => {

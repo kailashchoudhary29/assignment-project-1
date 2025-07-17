@@ -39,7 +39,6 @@ class Dashboard extends Page {
     }
 
     get eventTabs() {
-        // return $('//div[@role="tab"][text()="Events"]');
         return $('//div[@data-node-key="Events"]');
     }
 
@@ -52,6 +51,10 @@ class Dashboard extends Page {
     }
     get destinationText() {
         return $("//h3[text()='Destinations']");
+    }
+
+    get connectionText() {
+        return $("//h3[text()='Connections']");
     }
 
     triggerAPIForEventCount() {
@@ -77,6 +80,44 @@ class Dashboard extends Page {
         const deliveredCount = await this.deliveredEventsCount.getText();
         const failedCount = await this.failedEventsCount.getText();
         return { deliveredCount, failedCount };
+    }
+
+    async navigateToConnectionsSection() {
+        const connectionsHeading = await this.connectionText;
+        const isDisplayed = await connectionsHeading.isDisplayed().catch(() => false);
+
+        if (!isDisplayed) {
+            console.log('Navigating to Connections page');
+            const subMenuConnection = await this.subMenuConnectionTab;
+            await subMenuConnection.click();
+
+            // Wait for the Connections heading to appear
+            await browser.waitUntil(
+                async () => await connectionsHeading.isDisplayed(),
+                {
+                    timeout: 10000,
+                    timeoutMsg: '"Connections" heading was not displayed within 10 seconds'
+                }
+            );
+        } else {
+            console.log('Already on Connections page');
+        }
+    }
+
+    async dismissDashboardIntroIfPresent() {
+        const dashboardTextElement = await this.laterText;
+        const isVisible = await dashboardTextElement.isDisplayed();
+
+        if (isVisible) {
+            await expect(dashboardTextElement).toBeDisplayed();
+            await dashboardTextElement.click();
+            await this.goToDashboardBtn.click();
+            await this.closePopupButton.waitForDisplayed({ timeout: 2000 });
+            await this.closePopupButton.click();
+
+        } else {
+            throw new Error("Dashboard text element is not displayed or does not contain expected text");
+        }
     }
 
 }

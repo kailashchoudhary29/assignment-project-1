@@ -25,11 +25,7 @@ class LoginPage extends Page {
         return $('//button//span[text()="Log in"]');
     }
 
-    get laterText() {
-        return $('//a[@href="/addmfalater"]');
-    }
-
-    /**
+     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
@@ -47,6 +43,8 @@ class LoginPage extends Page {
             }
         );
     }
+
+
 
     /**
      * overwrite specific options to adapt it to page object

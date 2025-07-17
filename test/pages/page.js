@@ -13,4 +13,8 @@ module.exports = class Page {
     open () {
         return browser.url(`${process.env.BASE_URL}`)
     }
+
+    get laterText() {
+        return $('//a[@href="/addmfalater"]');
+    }
 }
