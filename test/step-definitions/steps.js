@@ -23,6 +23,7 @@ When(/^I enter valid usermail and password credentials$/, async () => {
 
     const { USER_EMAIL, USER_PASSWORD } = process.env;
     console.log('USER_EMAIL:', USER_EMAIL);
+    console.log('USER_PASSWORD:', USER_PASSWORD);
 
     if (!USER_EMAIL || !USER_PASSWORD) {
         throw new Error('Environment variables USER_EMAIL or USER_PASSWORD are not defined');

@@ -24,32 +24,32 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Create .env file from GitHub secrets
+      - name: Create .env file from GitHub secrets and variables
         run: |
           echo "ENV=qa" >> .env
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-          echo "USER_EMAIL=${{ secrets.LOGIN_USER }}" >> .env
-          echo "USER_PASSWORD=${{ secrets.LOGIN_PASS }}" >> .env
+          echo "USER_EMAIL=${{ vars.DEBUG_USER }}" >> .env
+          echo "USER_PASSWORD=${{ vars.DEBUG_PASSWORD }}" >> .env
         shell: bash
 
-      - name: Verify .env file contents (optional)
+      - name: Verify .env file contents (only for debugging - be careful!)
         run: cat .env
+        # ⚠️ Remove this before pushing sensitive info to logs in production
 
       - name: Run tests
         run: npx wdio
 
       - name: Upload error screenshots
-        if: failure()
+        if: failure()  
         uses: actions/upload-artifact@v4
         with:
           name: error-screenshots
           path: ./_results_/errorShots/**/*.png
 
       - name: Upload video artifacts
+        if: always() 
         uses: actions/upload-artifact@v4
         with:
           name: test-videos
           path: ./_results_/videos/**/*.*
           if-no-files-found: warn
-
-     
