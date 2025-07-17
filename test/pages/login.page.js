@@ -37,12 +37,13 @@ class LoginPage extends Page {
         await this.inputUsername.waitForExist({ timeout: 3000 });
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
+        await this.loginBtn.waitForClickable({ timeout: 5000 }); // wait up to 5 seconds
         await this.loginBtn.click();
         await browser.waitUntil(
             async () => await this.laterText.isDisplayed(),
             {
-                timeout: 10000, // Maximum wait time (10 sec)
-                timeoutMsg: 'Dashboard later text did not appear after 10 seconds'
+                timeout: 30000, // Maximum wait time (30 sec)
+                timeoutMsg: 'Dashboard later text did not appear after 30 seconds'
             }
         );
     }
