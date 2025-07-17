@@ -28,8 +28,8 @@ jobs:
         run: |
           echo "ENV=qa" >> .env
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-          echo "USER_EMAIL=${{ vars.DEBUG_USER }}" >> .env
-          echo "USER_PASSWORD=${{ vars.DEBUG_PASSWORD }}" >> .env
+          echo "USER_EMAIL=${{ secrets.LOGIN_USER }}" >> .env
+          echo "USER_PASSWORD=${{ secrets.LOGIN_PASS }}" >> .env
         shell: bash
 
       - name: Verify .env file contents (only for debugging - be careful!)
