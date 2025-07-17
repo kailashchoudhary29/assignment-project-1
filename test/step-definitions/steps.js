@@ -32,7 +32,7 @@ When(/^I enter valid usermail and password credentials$/, async () => {
 });
 
 Then(/^I should ignore multi authentication login$/, async () => {
-    const dashboardTextElement = await pages.dashboard.laterText;
+    const dashboardTextElement = await pages.login.laterText;
     const isVisible = await dashboardTextElement.isDisplayed();
 
     if (isVisible) {

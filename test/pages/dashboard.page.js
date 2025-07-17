@@ -10,9 +10,6 @@ class Dashboard extends Page {
      * define selectors using getter methods
      */
 
-    get laterText() {
-        return $('//a[@href="/addmfalater"]');
-    }
     get goToDashboardBtn() {
         return $('//button//span[text()="Go to dashboard"]');
     }

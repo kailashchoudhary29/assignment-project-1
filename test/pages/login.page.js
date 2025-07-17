@@ -9,38 +9,48 @@ class LoginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get inputUsername () {
+    get inputUsername() {
         return $('//input[@data-testid="Email"]');
     }
 
-    get inputPassword () {
+    get inputPassword() {
         return $('//input[@data-testid="Password"]');
     }
 
-    get forgetPassword () {
+    get forgetPassword() {
         return $('//a[normalize-space(text())="Forgot your password?"]');
     }
 
-    get loginBtn () {
+    get loginBtn() {
         return $('//button//span[text()="Log in"]');
+    }
+
+    get laterText() {
+        return $('//a[@href="/addmfalater"]');
     }
 
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async accountLogin (username, password) {
+    async accountLogin(username, password) {
         await this.inputUsername.waitForExist({ timeout: 3000 });
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
         await this.loginBtn.click();
-        await browser.pause(5000);
+        await browser.waitUntil(
+            async () => await this.laterText.isDisplayed(),
+            {
+                timeout: 10000, // Maximum wait time (10 sec)
+                timeoutMsg: 'Dashboard later text did not appear after 10 seconds'
+            }
+        );
     }
 
     /**
      * overwrite specific options to adapt it to page object
      */
-    open () {
+    open() {
         return super.open();
     }
 }
