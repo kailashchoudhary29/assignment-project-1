@@ -27,14 +27,10 @@ jobs:
       - name: Create .env file from GitHub secrets and variables
         run: |
           echo "ENV=qa" >> .env
-          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
-          echo "USER_EMAIL=${{ secrets.LOGIN_USER }}" >> .env
-          echo "USER_PASSWORD=${{ secrets.LOGIN_PASS }}" >> .env
+          echo "BASE_URL='${{ secrets.BASE_URL }}'" >> .env
+          echo "USER_EMAIL='${{ secrets.LOGIN_USER }}'" >> .env
+          echo "USER_PASSWORD='${{ secrets.LOGIN_PASS }}'" >> .env
         shell: bash
-
-      - name: Verify .env file contents (only for debugging - be careful!)
-        run: cat .env
-        # ⚠️ Remove this before pushing sensitive info to logs in production
 
       - name: Run tests
         run: npx wdio
